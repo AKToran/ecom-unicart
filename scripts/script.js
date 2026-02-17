@@ -13,9 +13,9 @@ const displayCategories = (categories) => {
       btn.className = "btn btn-outline btn-primary";
       btn.innerText = category[0].toUpperCase() + category.slice(1);
 
-      btn.addEventListener("click", ()=>{
+      btn.addEventListener("click", () => {
         loadProductByCategory(category);
-      })
+      });
 
       categoryContainer.append(btn);
     }
@@ -28,19 +28,19 @@ const loadAllProducts = () => {
     .then((data) => displayAllProducts(data));
 };
 
-const loadProductByCategory = (category) =>{
+const loadProductByCategory = (category) => {
   fetch(`https://fakestoreapi.com/products/category/${category}`)
-  .then(res => res.json())
-  .then(data => displayAllProducts(data))
-}
+    .then((res) => res.json())
+    .then((data) => displayAllProducts(data));
+};
 
 const displayAllProducts = (products) => {
   const productContainer = document.getElementById("product-container");
-  if(productContainer) productContainer.innerHTML = "";
+  if (productContainer) productContainer.innerHTML = "";
 
   products.map((product) => {
     const productCard = document.createElement("div");
-    productCard.classList.add("shadow-sm")
+    productCard.classList.add("shadow-sm");
     productCard.innerHTML = `
 
             <div class="rounded-t-xl h-[300px] flex justify-center items-center bg-slate-300">
@@ -52,19 +52,48 @@ const displayAllProducts = (products) => {
                 <p class="badge bg-slate-400">${product.category}</p>
                 <p><i class="text-orange-400 fa-solid fa-star"></i>${product.rating.rate}(${product.rating.count})</p>
               </div>
-              <p class="text-xl font-semibold">${product.title.slice(0,20)}...</p>
+              <p class="text-xl font-semibold">${product.title.slice(0, 20)}...</p>
               <p class="text-xl font-bold">$${product.price}</p>
               <div class="flex gap-2">
-                <button class="btn flex-1"><i class="fa-regular fa-eye"></i>Details</button>
+                <button onClick="loadProductDetails(${product.id})" class="btn flex-1"><i class="fa-regular fa-eye"></i>Details</button>
                 <button class="btn flex-1 btn-primary"><i class="fa-solid fa-cart-plus"></i>Add</button>
               </div>
             </div>
     `;
 
-    if(productContainer) productContainer.append(productCard);
+    if (productContainer) productContainer.append(productCard);
   });
 };
 
+const loadProductDetails = (id) => {
+  fetch(`https://fakestoreapi.com/products/${id}`)
+    .then((res) => res.json())
+    .then((data) => displayProductDetails(data));
+};
+
+const displayProductDetails = (product) => {
+  document.getElementById("my_modal_5").showModal();
+
+  const modalContent = document.getElementById("modal-content");
+
+  modalContent.innerHTML = `
+    <div class="rounded-t-xl h-[400px] flex-1 flex justify-center items-center bg-slate-300">
+      <img class="w-3/4 h-[350px]" src="${product.image}" alt="photo">
+    </div>
+
+    <div class="flex-1 p-4 rounded-b-xl space-y-2">
+      <p>
+      <i class="text-orange-400 fa-solid fa-star"></i>
+      ${product.rating.rate}(${product.rating.count})</p>
+      
+      <p class="text-xl font-semibold">${product.title}</p>
+      <p class="text-xl font-bold">$${product.price}</p>
+      <p>${product.description}</p>
+    </div>
+    
+  
+  `;
+};
 
 loadCategories();
 loadAllProducts();
