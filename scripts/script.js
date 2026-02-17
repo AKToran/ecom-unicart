@@ -9,7 +9,15 @@ const displayCategories = (categories) => {
 
   categories.forEach((category) => {
     if (categoryContainer) {
-      categoryContainer.innerHTML += `<button class="btn btn-outline btn-primary">${category[0].toUpperCase() + category.slice(1)}</button>`;
+      const btn = document.createElement("button");
+      btn.className = "btn btn-outline btn-primary";
+      btn.innerText = category[0].toUpperCase() + category.slice(1);
+
+      btn.addEventListener("click", ()=>{
+        loadProductByCategory(category);
+      })
+
+      categoryContainer.append(btn);
     }
   });
 };
@@ -50,6 +58,10 @@ const displayAllProducts = (products) => {
     if(productContainer) productContainer.append(productCard);
   });
 };
+
+const loadProductByCategory = (category) =>{
+  console.log(category);
+}
 
 
 loadCategories();
