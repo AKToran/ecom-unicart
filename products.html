@@ -49,7 +49,7 @@
   <main class="w-10/12 mx-auto">
 
     <section id="category-container" class="flex flex-wrap justify-center gap-2 my-4">
-      <button onclick="loadAllProducts()" id="btn-all" class="btn btn-outline btn-primary">All</button>
+      <button id="btn-all" onclick="loadAllProducts()" id="btn-all" class="btn btn-outline btn-primary">All</button>
     </section>
 
     <section id="product-container" class="grid grid-cols-1 md:grid-cols-4 gap-6 my-8">
@@ -119,6 +119,7 @@
         <div class="modal-action">
           <form method="dialog">
             <!-- if there is a button in form, it will close the modal -->
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
             <button class="btn btn-primary">Buy Now</button>
           </form>
         </div>

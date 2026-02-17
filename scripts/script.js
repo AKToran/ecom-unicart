@@ -10,7 +10,7 @@ const displayCategories = (categories) => {
   categories.forEach((category) => {
     if (categoryContainer) {
       const btn = document.createElement("button");
-      btn.className = "btn btn-outline btn-primary";
+      btn.className = `btn btn-outline btn-primary btn-${category.slice(0,3)}`;
       btn.innerText = category[0].toUpperCase() + category.slice(1);
 
       btn.addEventListener("click", () => {
@@ -26,12 +26,18 @@ const loadAllProducts = () => {
   fetch("https://fakestoreapi.com/products")
     .then((res) => res.json())
     .then((data) => displayAllProducts(data));
+    removeActiveButton();
+    document.getElementById('btn-all').classList.add("active")
 };
 
 const loadProductByCategory = (category) => {
   fetch(`https://fakestoreapi.com/products/category/${category}`)
     .then((res) => res.json())
     .then((data) => displayAllProducts(data));
+
+    removeActiveButton();
+    const btn= document.querySelector(`.btn-${category.slice(0,3)}`)
+    btn.classList.add("active")
 };
 
 const displayAllProducts = (products) => {
@@ -94,6 +100,11 @@ const displayProductDetails = (product) => {
   
   `;
 };
+
+const removeActiveButton=()=>{
+  const activeBtn = document.querySelectorAll(".active");
+  activeBtn.forEach(btn=> btn.classList.remove("active"));
+}
 
 loadCategories();
 loadAllProducts();
