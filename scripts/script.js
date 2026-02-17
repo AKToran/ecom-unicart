@@ -28,6 +28,12 @@ const loadAllProducts = () => {
     .then((data) => displayAllProducts(data));
 };
 
+const loadProductByCategory = (category) =>{
+  fetch(`https://fakestoreapi.com/products/category/${category}`)
+  .then(res => res.json())
+  .then(data => displayAllProducts(data))
+}
+
 const displayAllProducts = (products) => {
   const productContainer = document.getElementById("product-container");
   if(productContainer) productContainer.innerHTML = "";
@@ -58,10 +64,6 @@ const displayAllProducts = (products) => {
     if(productContainer) productContainer.append(productCard);
   });
 };
-
-const loadProductByCategory = (category) =>{
-  console.log(category);
-}
 
 
 loadCategories();
